@@ -1,0 +1,2 @@
+class GroupRetrieval :
+    pass
