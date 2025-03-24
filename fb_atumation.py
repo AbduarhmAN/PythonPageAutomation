@@ -4,6 +4,7 @@ from integration import SeleniumManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from config import DataManager, ConfigManager
+from retrieval import GroupRetrieval
 
 class ApplicationController:
     """
@@ -28,18 +29,22 @@ class ApplicationController:
         # Initialize managers.
         self.authMang = AuthenticationManager(self.driverManager, self.username, self.password)
         self.dataMgr = DataManager()
-        self.confgMgr = ConfigManager()
+        self.confgMgr = ConfigManager(main_page="Abdurahman Maghrbi")
+        self.groupsMgr = GroupRetrieval(self.webdriver,self.dataMgr.groups_open_button,2)
+
 
     def login(self):
         """
         Executes the login sequence using AuthenticationManager.
         """
         try:
+            print("[DEBUG] Starting login process...")
             self.authMang.open_login_page()
             if self.authMang.detect_login_page():
                 self.authMang.preform_login()
+            print("[DEBUG] Login process completed successfully.")
         except Exception as e:
-            print(f"Error during login: {e}")
+            print(f"[ERROR] Error during login: {e}")
             return False
         return True
 
@@ -72,17 +77,49 @@ class ApplicationController:
             print("Account pages retrieved successfully.")
         except Exception as e:
             print(f"Error retrieving account pages: {e}")
+    
+    def openGroupsPage(self):
+        """
+        Opens the groups page.
+        """
+        try:
+            self.webdriver.find_element(By.XPATH, self.dataMgr.menu_button).click()
+            sleep(1)
+            self.webdriver.find_element(By.XPATH, self.dataMgr.groups_button).click()
+            sleep(1)
+            self.webdriver.find_element(By.XPATH, self.dataMgr.see_all_groups_button).click()
+            sleep(1)
+            print("Groups page opened successfully.")
+
+        except Exception as e:
+            print(f"Error opening groups page: {e}")
 
     def run(self):
         """
         Executes the complete automation flow.
         """
-        if not self.login():
-            return
-        self.setup_account_ui()
-        self.retrieve_account_pages()
-        # For debugging purposes. In production, use explicit waits.
-        sleep(1000)
+        try:
+            print("[DEBUG] Starting application flow...")
+            if not self.login():
+                return
+            self.setup_account_ui()
+            self.retrieve_account_pages()
+            self.openGroupsPage()
+            
+            original_window = self.webdriver.current_window_handle
+            for new_window in self.groupsMgr.process_buttons():
+                print(f"[DEBUG] Processing new window: {new_window}")
+                self.webdriver.switch_to.window(new_window)
+                # Insert external processing for the new window here:
+                # For example: post_automation.process_page(self.webdriver)
+                sleep(2)  # Simulated external processing time.
+                self.webdriver.close()
+                self.webdriver.switch_to.window(original_window)
+                
+            sleep(1000)
+            print("[DEBUG] Application flow completed successfully.")
+        except Exception as e:
+            print(f"[ERROR] Error during application flow: {e}")
 
 
 if __name__ == "__main__":

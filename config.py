@@ -5,6 +5,18 @@ from typing import List
 class DataManager:
 
     mainPage: str = ""
+    groups_open_button: str = (
+        "//*[local-name()='span' and contains(@class,'x193iq5w xeuugli x13faqbe x1vvkbs x1xmvt09 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x xudqn12 x3x7a5m x6prxxf xvq8zen x1s688f x1mvi0mv')]"
+    )
+    see_all_groups_button: str = (
+        "//*[local-name()='a' and contains(@class,'x1i10hfl x1qjc9v5 xjqpnuy xa49m3k xqeqjp1 x2hbi6w x972fbf xcfux6l x1qhh985 xm0m39n x9f619 xdl72j9 x2lah0s xe8uvvx x2lwn1j xeuugli x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x1q0g3np x87ps6o x1lku1pv x1a2a7pz x1fey0fg x1ypdohk x1k74hu9 x1ejq31n xd10rxx x1sy0etr x17r0tee x1rg5ohu xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 x3ajldb')]"
+    )
+    groups_button : str = (
+        "//*[local-name()='img' and contains(@src,'https://static.xx.fbcdn.net/rsrc.php/v4/yZ/r/MhkwI3R0SHP.png?_nc_eui2=AeERq3fS_avM27H0Ey8ZRM-jALFbgMvRWKAAsVuAy9FYoOCCTqTOMKnJYH0EjwbiiqzdGC1VLbIZ3zfNOneavfPE')]"
+    )
+    menu_button: str = (
+        "//*[local-name()='path' and contains(@d,'M18.5 1A1.5 1.5 0 0 0 17 2.5v3A1.5 1.5 0 0 0 18.5 7h3A1.5 1.5 0 0 0 23 5.5v-3A1.5 1.5 0 0 0 21.5 1h-3zm0 8a1.5 1.5 0 0 0-1.5 1.5v3a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5v-3A1.5 1.5 0 0 0 21.5 9h-3zm-16 8A1.5 1.5 0 0 0 1 18.5v3A1.5 1.5 0 0 0 2.5 23h3A1.5 1.5 0 0 0 7 21.5v-3A1.5 1.5 0 0 0 5.5 17h-3zm8 0A1.5 1.5 0 0 0 9 18.5v3a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5v-3a1.5 1.5 0 0 0-1.5-1.5h-3zm8 0a1.5 1.5 0 0 0-1.5 1.5v3a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5v-3a1.5 1.5 0 0 0-1.5-1.5h-3zm-16-8A1.5 1.5 0 0 0 1 10.5v3A1.5 1.5 0 0 0 2.5 15h3A1.5 1.5 0 0 0 7 13.5v-3A1.5 1.5 0 0 0 5.5 9h-3zm0-8A1.5 1.5 0 0 0 1 2.5v3A1.5 1.5 0 0 0 2.5 7h3A1.5 1.5 0 0 0 7 5.5v-3A1.5 1.5 0 0 0 5.5 1h-3zm8 0A1.5 1.5 0 0 0 9 2.5v3A1.5 1.5 0 0 0 10.5 7h3A1.5 1.5 0 0 0 15 5.5v-3A1.5 1.5 0 0 0 13.5 1h-3zm0 8A1.5 1.5 0 0 0 9 10.5v3a1.5 1.5 0 0 0 1.5 1.5h3a1.5 1.5 0 0 0 1.5-1.5v-3A1.5 1.5 0 0 0 13.5 9h-3z')]"
+    )
     account_name: str = (
         "//*[local-name()='span' and @class='x1lliihq x6ikm8r x10wlt62 x1n2onr6']"
     )
@@ -55,25 +67,31 @@ class ConfigManager:
         :param unorgnizedElements: Optionally provided container element (if empty, uses PagesOnAccount)
         :return: A list of filtered WebElement pages.
         """
-        if not cAccount:
-            cAccount = self.currentAccount
-        if unorgnizedElements is None:
-            unorgnizedElements = self.PagesOnAccount
-
         try:
-            pages = unorgnizedElements.find_elements(
-                by="xpath", value=self.dataMgr.pages_filter
-            )
-        except Exception as e:
-            print(f"Error retrieving pages: {e}")
-            return []
+            print("[DEBUG] Retrieving account pages...")
+            if not cAccount:
+                cAccount = self.currentAccount
+            if unorgnizedElements is None:
+                unorgnizedElements = self.PagesOnAccount
 
-        # Use a single helper function with skip_last flag for main account
-        skip_last = (cAccount == self.dataMgr.mainPage)
-        organizedElements = self._filter_pages(pages, cAccount, skip_last)
-        
-        print(f"Pages on the account are: {[page.text for page in organizedElements]}")
-        return organizedElements
+            try:
+                pages = unorgnizedElements.find_elements(
+                    by="xpath", value=self.dataMgr.pages_filter
+                )
+            except Exception as e:
+                print(f"Error retrieving pages: {e}")
+                return []
+
+            # Use a single helper function with skip_last flag for main account
+            skip_last = (cAccount == self.dataMgr.mainPage)
+            organizedElements = self._filter_pages(pages, cAccount, skip_last)
+            
+            print(f"Pages on the account are: {[page.text for page in organizedElements]}")
+            print("[DEBUG] Account pages retrieved successfully.")
+            return organizedElements
+        except Exception as e:
+            print(f"[ERROR] Error retrieving account pages: {e}")
+            return []
 
     def _filter_pages(self, pages: List[WebElement], cAccount: str, skip_last: bool) -> List[WebElement]:
         """

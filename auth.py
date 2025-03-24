@@ -35,8 +35,13 @@ class AuthenticationManager:
         """
         Opens the Facebook login page and waits for it to load.
         """
-        self.__wdriver.get(self.__login_url)
-        sleep(10)  # Consider replacing sleep with an explicit wait for better stability
+        try:
+            print("[DEBUG] Opening login page...")
+            self.__wdriver.get(self.__login_url)
+            sleep(10)  # Consider replacing sleep with an explicit wait for better stability
+            print("[DEBUG] Login page opened successfully.")
+        except Exception as e:
+            print(f"[ERROR] Failed to open login page: {e}")
 
     def detect_login_page(self) -> bool:
         """
@@ -45,10 +50,11 @@ class AuthenticationManager:
         :return: True if email, password, and login button elements are found; otherwise, False.
         """
         try:
-            # Attempt to locate required elements
+            print("[DEBUG] Detecting login page elements...")
             self.__input_email = self.__wdriver.find_element(By.NAME, "email")
             self.__input_pass = self.__wdriver.find_element(By.NAME, "pass")
             self.__login_button = self.__wdriver.find_element(By.NAME, "login")
+            print("[DEBUG] Login page elements detected successfully.")
             return self.__input_email is not None and self.__input_pass is not None
         except Exception as e:
             print(f"[ERROR] detect_login_page error: {e}")
@@ -71,6 +77,7 @@ class AuthenticationManager:
         :return: True if login steps are executed successfully; otherwise, False.
         """
         try:
+            print("[DEBUG] Performing login...")
             self._clear_fields()  # Clear any existing content
 
             # Navigate to email field and simulate user entering the username.
@@ -89,6 +96,7 @@ class AuthenticationManager:
 
             # Final click to submit the login form.
             self.__driverManager.clickOnScreen()
+            print("[DEBUG] Login performed successfully.")
             return True
         except Exception as e:
             print(f"[ERROR] preform_login error: {e}")
