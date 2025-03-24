@@ -1,2 +1,2 @@
-class CleanupManager :
+class CleanupManager:
     pass

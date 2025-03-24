@@ -1,2 +1,2 @@
-class PostAutomation :
+class PostAutomation:
     pass

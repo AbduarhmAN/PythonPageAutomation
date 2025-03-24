@@ -1,2 +1,2 @@
-class GroupRetrieval :
+class GroupRetrieval:
     pass

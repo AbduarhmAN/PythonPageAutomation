@@ -1,2 +1,2 @@
-class ContentUploader :
+class ContentUploader:
     pass
