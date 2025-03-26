@@ -6,6 +6,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from config import DataManager, ConfigManager
 from retrieval import GroupRetrieval
 
+
 class ApplicationController:
     """
     A controller class to encapsulate the flow:
@@ -14,6 +15,8 @@ class ApplicationController:
         - Navigate account UI.
         - Retrieve pages container and filter pages.
     """
+
+
     def __init__(self):
         # Initialize the driver manager and get the webdriver.
         self.driverManager = SeleniumManager()
@@ -110,13 +113,17 @@ class ApplicationController:
             for new_window in self.groupsMgr.process_buttons():
                 print(f"[DEBUG] Processing new window: {new_window}")
                 self.webdriver.switch_to.window(new_window)
+                self.groupsMgr.initPost(self.dataMgr, self.webdriver)
+                if(self.groupsMgr.isPostEnabledInGroup()):
+                    self.groupsMgr.process_post()
                 # Insert external processing for the new window here:
                 # For example: post_automation.process_page(self.webdriver)
                 sleep(2)  # Simulated external processing time.
                 self.webdriver.close()
                 self.webdriver.switch_to.window(original_window)
+
                 
-            sleep(1000)
+                
             print("[DEBUG] Application flow completed successfully.")
         except Exception as e:
             print(f"[ERROR] Error during application flow: {e}")

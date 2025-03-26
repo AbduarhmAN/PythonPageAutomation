@@ -1,13 +1,20 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support.ui import WebDriverWait
+from config import DataManager
 from time import sleep
+
+from post_automation import PostAutomation
 
 class GroupRetrieval:
     def __init__(self, webdriver, button_xpath: str, scroll_pause_time: int = 2):
         self.webdriver = webdriver
         self.button_xpath = button_xpath
         self.scroll_pause_time = scroll_pause_time
+        self.postMgr : PostAutomation = None
+        
 
     def __scroll_to_bottom(self) -> None:
         try:
@@ -24,13 +31,11 @@ class GroupRetrieval:
         except Exception as e:
             print(f"[ERROR] Failed to scroll to bottom: {e}")
 
-    def __get_buttons(self):
+    def __get_buttons(self) -> list[WebElement]:
         self.__scroll_to_bottom()
-        buttons = self.webdriver.find_elements(By.XPATH, self.button_xpath)
-        print(f"[DEBUG] Found {len(buttons)} buttons before filtering")
-        if buttons:
-            buttons = buttons[2:]
-        print(f"[DEBUG] {len(buttons)} buttons after filtering")
+        buttons : list[WebElement] = self.webdriver.find_elements(By.XPATH, self.button_xpath)
+        print(f"[DEBUG] Found {len(buttons)} buttons")
+
         return buttons
 
     def process_buttons(self):
@@ -38,6 +43,8 @@ class GroupRetrieval:
         buttons = self.__get_buttons()
         original_window = self.webdriver.current_window_handle
         actions = ActionChains(self.webdriver)
+        for button in buttons:
+            print(f"group name is:{button.text}")
         
         for index, button in enumerate(buttons):
             try:
@@ -59,3 +66,31 @@ class GroupRetrieval:
             except Exception as e:
                 print(f"[ERROR] Processing button error: {e}")
                 self.webdriver.switch_to.window(original_window)
+    
+    def initPost(self, dataMgr: DataManager, webdriver: WebDriverWait):
+        """
+        Placeholder for initializing a post in a new window.
+        """
+        print("[DEBUG] Initializing post")
+        self.postMgr = PostAutomation(webdriver, dataMgr)
+
+
+    def isPostEnabledInGroup(self) -> bool:
+        """
+        Placeholder for checking if a post is enabled in a group.
+        """
+        print("[DEBUG] Checking if post is enabled in group...")
+        if self.postMgr.verify_post():
+            print("[DEBUG] Post is enabled in group")
+            return True
+        print("[DEBUG] Post is not enabled in group")
+        return False
+    
+    def process_post(self):
+        """
+        Placeholder for processing a post in a new window.
+        """
+        
+        print("[DEBUG] Processing post in new window...")
+        # Future implementation goes here.
+        self.postMgr.process_post()
