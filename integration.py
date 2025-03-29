@@ -17,7 +17,9 @@ class SeleniumManager:
             print("[DEBUG] Initializing WebDriver...")
             chrome_options = Options()
             chrome_options.add_experimental_option("useAutomationExtension", False)
-            chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            chrome_options.add_experimental_option(
+                "excludeSwitches", ["enable-automation"]
+            )
             chrome_options.add_argument("--disable-blink-features=AutomationControlled")
             chrome_options.add_argument(
                 "user-data-dir=C:/Users/AM/AppData/Local/Google/Chrome/User Data"
@@ -35,7 +37,9 @@ class SeleniumManager:
     def navigate_to_elem(self, element, min_coordinate=10, movement_duration=1):
         try:
             print("[DEBUG] Navigating to element...")
-            outer_pos = self.__wdriver.get_window_position()  # Example: {'x': 0, 'y': 0}
+            outer_pos = (
+                self.__wdriver.get_window_position()
+            )  # Example: {'x': 0, 'y': 0}
 
             browser_offset_y = self.__wdriver.execute_script(
                 "return window.outerHeight - window.innerHeight;"

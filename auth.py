@@ -8,28 +8,33 @@ class AuthenticationManager:
     """
     Manages login authentication using Selenium WebDriver.
     """
-    __wdriver: WebDriver = None         # WebDriver instance
+
+    __wdriver: WebDriver = None  # WebDriver instance
     __driverManager: SeleniumManager = None  # SeleniumManager instance
-    __username: str = ""                # Username for login
-    __password: str = ""                # Password for login
-    __input_email = None                # Email input WebElement
-    __input_pass = None                 # Password input WebElement
-    __login_button = None               # Login button WebElement
+    __username: str = ""  # Username for login
+    __password: str = ""  # Password for login
+    __input_email = None  # Email input WebElement
+    __input_pass = None  # Password input WebElement
+    __login_button = None  # Login button WebElement
     __login_url: str = "https://www.facebook.com/login/"  # Login page URL
 
-    def __init__(self, driverManager: SeleniumManager, username: str, password: str) -> None:
+    def __init__(
+        self, driverManager: SeleniumManager, username: str, password: str
+    ) -> None:
         """
         Initializes the AuthenticationManager with a SeleniumManager instance, username, and password.
-        
+
         :param driverManager: Provides the WebDriver instance.
         :param username: Username for authentication.
         :param password: Password for authentication.
         """
         self.__wdriver = driverManager.get_webdriver()  # Retrieve the WebDriver
-        self.__driverManager = driverManager              # Store SeleniumManager
-        self.__username = username                        # Store username
-        self.__password = password                        # Store password
-        print(f"[DEBUG] WebDriver type: {type(self.__wdriver)}")  # Debug: print WebDriver's type
+        self.__driverManager = driverManager  # Store SeleniumManager
+        self.__username = username  # Store username
+        self.__password = password  # Store password
+        print(
+            f"[DEBUG] WebDriver type: {type(self.__wdriver)}"
+        )  # Debug: print WebDriver's type
 
     def open_login_page(self) -> None:
         """
@@ -38,7 +43,9 @@ class AuthenticationManager:
         try:
             print("[DEBUG] Opening login page...")
             self.__wdriver.get(self.__login_url)
-            sleep(10)  # Consider replacing sleep with an explicit wait for better stability
+            sleep(
+                10
+            )  # Consider replacing sleep with an explicit wait for better stability
             print("[DEBUG] Login page opened successfully.")
         except Exception as e:
             print(f"[ERROR] Failed to open login page: {e}")
@@ -46,7 +53,7 @@ class AuthenticationManager:
     def detect_login_page(self) -> bool:
         """
         Detects if the essential login elements are present.
-        
+
         :return: True if email, password, and login button elements are found; otherwise, False.
         """
         try:
@@ -73,7 +80,7 @@ class AuthenticationManager:
     def preform_login(self) -> bool:
         """
         Performs the login process by simulating user interactions.
-        
+
         :return: True if login steps are executed successfully; otherwise, False.
         """
         try:
