@@ -16,7 +16,7 @@ class PostAutomation:
     def __init__(self, webdriver: webdriver, dataMgr: DataManager):
         self.postText = ""
         self.postImageAndVideo = ""
-        self.webdriver: WebDriverWait = WebDriverWait(webdriver, 20)
+        self.webdriver: WebDriverWait = WebDriverWait(webdriver, 10)
         self.dataMgr: DataManager = dataMgr
         self.isPostEnabledInGroup: bool = False
         self.isPostInput: WebElement = None
@@ -29,8 +29,22 @@ class PostAutomation:
         """
         print("[DEBUG] checking if the page is ready for posting or make wait decision")
         if self.isPostEnabledInGroup:
+            try:
+                isWelecome = self.webdriver.until(
+                    EC.invisibility_of_element((By.XPATH, self.dataMgr.welecomePopup))
+                )
+                
+                if isWelecome == True:
+                    print(f"[DEBUG] this is not new Group")
+                    self.isPostInput.click()
+                else:
+                    print(f"[DEBUG] closing the welcome popup")
+                    isWelecome.find_element(By.XPATH, self.dataMgr.closePopupButton).click()
+                    self.__process_page()
 
-            self.isPostInput.click()
+            except Exception as e:
+                print(f"[DEBUG] Error checking welcome popup due to exception :\n{e}")
+                
         else:
             print("[DEBUG] Post form not found")
 
@@ -108,49 +122,58 @@ class PostAutomation:
                 Controller().release(Key.enter)
                 sleep(2)
 
-              
                 try:
                     # Wait until the "Post" button is clickable, then click it.
                     post_button = self.webdriver.until(
                         EC.element_to_be_clickable((By.XPATH, self.dataMgr.post_button))
                     )
-                    print("[DEBUG] 'Post' button pressed; it is now expected to be disabled.")
+                    print(
+                        "[DEBUG] 'Post' button pressed; it is now expected to be disabled."
+                    )
                     post_button.click()
                     sleep(2)
                     # Continuously monitor the button's state.
                     while True:
                         try:
                             try:
-                            # If the button does not become clickable within 2 seconds, check if it has vanished.
+                                # If the button does not become clickable within 2 seconds, check if it has vanished.
                                 invisible = self.webdriver.until(
-                                    EC.invisibility_of_element_located((By.XPATH, self.dataMgr.post_button))
+                                    EC.invisibility_of_element(
+                                        (By.XPATH, self.dataMgr.loading_post)
+                                    )
                                 )
                                 if invisible:
-                                    print("[DEBUG] 'Post' button has disappeared. Process completed successfully.")
+                                    print(
+                                        "[DEBUG] 'Post' button has disappeared. Process completed successfully."
+                                    )
                                     break
                             except TimeoutException:
-                                # Wait briefly (2 seconds) for the "Post" button to become clickable (i.e., enabled).
-                                clickable_button = self.webdriver.until(
-                                    EC.element_to_be_clickable((By.XPATH, self.dataMgr.post_button))
-                                )
-                                print("[DEBUG] 'Post' button is enabled again. Clicking it.")
-                                post_button.click()
-                                print("[DEBUG] 'Post' button clicked.")
+                               print("still loading ...")
+                               continue
                         except TimeoutException:
                             try:
                                 # If the button does not become clickable within 2 seconds, check if it has vanished.
                                 invisible = self.webdriver.until(
-                                    EC.invisibility_of_element_located((By.XPATH, self.dataMgr.post_button))
+                                    EC.invisibility_of_element_located(
+                                        (By.XPATH, self.dataMgr.post_button)
+                                    )
                                 )
                                 if invisible:
-                                    print("[DEBUG] 'Post' button has disappeared. Process completed successfully.")
+                                    print(
+                                        "[DEBUG] 'Post' button has disappeared. Process completed successfully."
+                                    )
                                     break
                             except TimeoutException:
                                 # If the button is still visible but not clickable, wait a bit longer and recheck.
-                                print("[DEBUG] 'Post' button remains disabled and visible. Waiting and rechecking...")
+                                print(
+                                    "[DEBUG] 'Post' button remains disabled and visible. Waiting and rechecking..."
+                                )
                                 sleep(2)
                 except Exception as e:
-                    print(f"[DEBUG] Error encountered while handling the 'Post' button: {e}")
+                    print(
+                        f"[DEBUG] Error encountered while handling the 'Post' button: {e}"
+                    )
+
             except Exception as e:
                 print(
                     f"[DEBUG] Error clicking image and video button due to exception :\n{e}"

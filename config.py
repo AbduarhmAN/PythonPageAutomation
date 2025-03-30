@@ -4,13 +4,14 @@ from typing import List
 
 class DataManager:
 
-    post_text: str = (
-        "Grow your business with us! "
-    )
-    post_image: str = (
-        '"C:\\Users\\AM\\Pictures\\MarkYourAppWithUs.png"'
-    )
+    post_text: str = "Are you in need of a professional resume that meets ATS standards at no cost? \nNow is your opportunity—follow us and claim your free copy today.What are you waiting for?"
+    post_image: str = "C:\\Users\\AM\\Pictures\\free_resume.png"
     post_video: str = ""
+
+
+    welecomePopup= "//*[local-name()='div' and @class='x1i10hfl xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1q0g3np x87ps6o x1lku1pv x1a2a7pz x6s0dn4 xzolkzo x12go9s9 x1rnf11y xprq8jg x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x78zum5 xl56j7k xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 xc9qbxq x14qfxbe x1qhmfi1']"
+    closePopupButton="//*[local-name()='div' and @class='x92rtbv x10l6tqk x1tk7jg1 x1vjfegm']//*[local-name()='div' and @class='x1i10hfl xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1q0g3np x87ps6o x1lku1pv x1a2a7pz x6s0dn4 xzolkzo x12go9s9 x1rnf11y xprq8jg x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x78zum5 xl56j7k xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 xc9qbxq x14qfxbe x1qhmfi1']"
+
 
     image_and_video_input_field: str = (
         "//*[local-name()='img' and @class='x1b0d499 xl1xv1r' and contains(@src,'https://static.xx.fbcdn.net/rsrc.php/v4/y7/r/Ivw7nhRtXyo.png')]"
@@ -18,8 +19,11 @@ class DataManager:
     image_and_video_button: str = (
         "//*[local-name()='div' and @class='x9f619 x1n2onr6 x1ja2u2z x78zum5 xdt5ytf x1iyjqo2 x2lwn1j xl56j7k']"
     )
+    loading_post : str =(
+        "//*[@class='x6s0dn4 x1h0vfkc x1lq5wgf xgqcy7u x30kzoy x9jhf4c x1ey2m1c x78zum5 xdt5ytf xds687c x17qophe xl56j7k x10l6tqk x13vifvy xhtitgo']"
+    )
     post_button: str = (
-        "//*[local-name()='div'and @class='x9f619 x1ja2u2z x78zum5 x2lah0s x1n2onr6 x1qughib x1qjc9v5 xozqiw3 x1q0g3np x1pi30zi x1swvt13 xyamay9 xykv574 xbmpl8g x4cne27 xifccgj']//*[local-name()='div'and @class='x9f619 x1n2onr6 x1ja2u2z x78zum5 xdt5ytf x193iq5w xeuugli x1r8uery x1iyjqo2 xs83m0k xsyo7zv x16hj40l x10b6aqq x1yrsyyn']"
+        "//*[local-name()='div'and @class='x9f619 x1ja2u2z x78zum5 x2lah0s x1n2onr6 x1qughib x1qjc9v5 xozqiw3 x1q0g3np x1pi30zi x1swvt13 xyamay9 xykv574 xbmpl8g x4cne27 xifccgj']//*[local-name()='div'and @class='x1ja2u2z x78zum5 x2lah0s x1n2onr6 xl56j7k x6s0dn4 xozqiw3 x1q0g3np xi112ho x17zwfj4 x585lrc x1403ito x972fbf xcfux6l x1qhh985 xm0m39n x9f619 xn6708d x1ye3gou xtvsq51 x1r1pt67']"
     )
     text_input_field: str = (
         "//*[local-name()='p' and @class='xdj266r x11i5rnm xat24cr x1mh8g0r x16tdsg8 xdpxx8g']"
