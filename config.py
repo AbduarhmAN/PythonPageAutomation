@@ -5,10 +5,10 @@ from typing import List
 class DataManager:
 
     post_text: str = (
-        "Grow your business with us! "
+        "contact us now what are you waiting for ! "
     )
     post_image: str = (
-        '"C:\\Users\\AM\\Pictures\\MarkYourAppWithUs.png"'
+        'C:\\Users\\OBT\\OneDrive\\Pictures\\free_resume.png'
     )
     post_video: str = ""
 
