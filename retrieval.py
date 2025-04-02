@@ -52,9 +52,10 @@ class GroupRetrieval:
         original_window = self.webdriver.current_window_handle
         actions = ActionChains(self.webdriver)
 
+        buttons=buttons[84:]
+
         for button in buttons:
             print(f"group name is:{button.text}")
-
 
         for index, button in enumerate(buttons):
             try:

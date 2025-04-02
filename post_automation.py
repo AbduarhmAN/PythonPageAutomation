@@ -33,18 +33,20 @@ class PostAutomation:
                 isWelecome = self.webdriver.until(
                     EC.invisibility_of_element((By.XPATH, self.dataMgr.welecomePopup))
                 )
-                
+
                 if isWelecome == True:
                     print(f"[DEBUG] this is not new Group")
                     self.isPostInput.click()
                 else:
                     print(f"[DEBUG] closing the welcome popup")
-                    isWelecome.find_element(By.XPATH, self.dataMgr.closePopupButton).click()
+                    isWelecome.find_element(
+                        By.XPATH, self.dataMgr.closePopupButton
+                    ).click()
                     self.__process_page()
 
             except Exception as e:
                 print(f"[DEBUG] Error checking welcome popup due to exception :\n{e}")
-                
+
         else:
             print("[DEBUG] Post form not found")
 
@@ -148,8 +150,8 @@ class PostAutomation:
                                     )
                                     break
                             except TimeoutException:
-                               print("still loading ...")
-                               continue
+                                print("still loading ...")
+                                continue
                         except TimeoutException:
                             try:
                                 # If the button does not become clickable within 2 seconds, check if it has vanished.
