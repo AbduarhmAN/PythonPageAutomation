@@ -11,7 +11,10 @@ class SeleniumManager:
 
     # C:/Users/OBT/AppData/Local/Google/Chrome/User Data
     # Profile 5
-
+    
+    ########################################################
+    # C:/Users/AM/AppData/Local/Google/Chrome/User Data
+    # Profile 4
     def Initialze_webdriver(self):
         try:
             print("[DEBUG] Initializing WebDriver...")
@@ -22,9 +25,9 @@ class SeleniumManager:
             )
             chrome_options.add_argument("--disable-blink-features=AutomationControlled")
             chrome_options.add_argument(
-                "user-data-dir=C:/Users/AM/AppData/Local/Google/Chrome/User Data"
+                "user-data-dir=C:/Users/OBT/AppData/Local/Google/Chrome/User Data"
             )
-            chrome_options.add_argument("profile-directory=Profile 4")
+            chrome_options.add_argument("profile-directory=Profile 5")
             self.__wdriver = webdriver.Chrome(options=chrome_options)
             self.__wdriver.maximize_window()
             print("[DEBUG] WebDriver initialized successfully.")

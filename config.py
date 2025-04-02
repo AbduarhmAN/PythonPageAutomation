@@ -5,7 +5,14 @@ from typing import List
 class DataManager:
 
     post_text: str = (
+<<<<<<< HEAD
         "Are you in need of a professional resume that meets ATS standards at no cost? \nNow is your opportunity—follow us and claim your free copy today.What are you waiting for?"
+=======
+        "contact us now what are you waiting for ! "
+    )
+    post_image: str = (
+        'C:\\Users\\OBT\\OneDrive\\Pictures\\free_resume.png'
+>>>>>>> cf41afe62ca4e76955c967683b4aac62873bffbd
     )
     post_image: str = "C:\\Users\\AM\\Pictures\\free_resume.png"
     post_video: str = ""
