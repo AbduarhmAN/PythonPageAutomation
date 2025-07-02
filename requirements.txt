@@ -1,0 +1,12 @@
+# Core dependencies for Python Facebook Page Automation
+
+# Web automation framework
+selenium>=4.0.0
+
+# GUI automation for enhanced interactions
+pyautogui>=0.9.50
+
+# Additional utilities (if needed in future)
+# requests>=2.25.0
+# beautifulsoup4>=4.9.0
+# pillow>=8.0.0  # For screenshot capabilities with pyautogui
