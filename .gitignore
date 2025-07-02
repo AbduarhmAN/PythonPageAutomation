@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Environment variables and sensitive data
+.env
+config.ini
+credentials.json
