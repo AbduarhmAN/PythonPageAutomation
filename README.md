@@ -14,9 +14,14 @@ This tool is for educational and legitimate business purposes only. Please ensur
 
 - Automated Facebook login with credential management
 - Account page retrieval and filtering
-- Extensible architecture for additional automation tasks
+- Robust XPath selector system with fallback options
+- Input validation and security measures
 - Cross-platform browser support
 - Environment-based configuration
+- Comprehensive logging and error handling
+- Extensible architecture for additional automation tasks
+- Built-in cleanup and resource management
+- Example scripts for easy testing
 
 ## Prerequisites
 
@@ -80,6 +85,18 @@ For best results, configure a dedicated Chrome profile:
 
 ## Usage
 
+### Quick Start
+
+Run the example script to test your setup:
+```bash
+python example.py
+```
+
+For a custom automation test:
+```bash
+python example.py --custom
+```
+
 ### Basic Usage
 
 ```python
@@ -87,7 +104,7 @@ from fb_automation import ApplicationController
 
 # Initialize and run the automation
 app = ApplicationController()
-app.run()
+success = app.run()
 ```
 
 ### Advanced Usage
@@ -122,10 +139,14 @@ PythonPageAutomation/
 ├── auth.py              # Authentication management
 ├── integration.py       # Selenium WebDriver integration
 ├── config.py           # Configuration and data management
-├── post_automation.py  # Post automation features (future)
-├── upload.py           # Content upload features (future)
-├── cleanup.py          # Cleanup utilities (future)
-├── retrieval.py        # Data retrieval features (future)
+├── env_config.py       # Environment configuration management
+├── validation.py       # Input validation utilities
+├── xpath_config.py     # XPath selectors with fallbacks
+├── cleanup.py          # Resource cleanup management
+├── post_automation.py  # Post automation features (extensible)
+├── upload.py           # Content upload features (extensible)
+├── retrieval.py        # Data retrieval features (extensible)
+├── example.py          # Example usage scripts
 ├── requirements.txt    # Python dependencies
 ├── .env.example       # Environment variables template
 └── README.md          # This file

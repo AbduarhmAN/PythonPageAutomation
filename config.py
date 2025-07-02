@@ -61,9 +61,22 @@ class ConfigManager:
             unorgnizedElements = self.PagesOnAccount
 
         try:
-            pages = unorgnizedElements.find_elements(
-                by="xpath", value=self.dataMgr.pages_filter
-            )
+            # Use improved selector system
+            from xpath_config import SelectorManager
+            from selenium.webdriver.remote.webdriver import WebDriver
+            
+            # Get webdriver from the element
+            webdriver = unorgnizedElements._parent
+            selector_manager = SelectorManager(webdriver)
+            
+            # Get pages using improved selectors
+            pages = selector_manager.get_pages_filter_elements()
+            
+            if not pages:
+                # Fallback to original method
+                pages = unorgnizedElements.find_elements(
+                    by="xpath", value=self.dataMgr.pages_filter
+                )
         except Exception as e:
             print(f"Error retrieving pages: {e}")
             return []
